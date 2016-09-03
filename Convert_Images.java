@@ -21,8 +21,23 @@ public class Convert_Images
 		
 		
 		File folder = new File("./"+dir_path);
+		File dest_dir = new File("./"+dest_path);
 		File[] list_of_files = folder.listFiles();
 		
+
+		//if destination doesn't exist, create it
+		if(dest_dir.exists()==false)
+		{
+			try
+			{
+				dest_dir.mkdir();
+			} 
+			catch(Exception error){
+					System.out.println("Couldn't create destination directory");
+			}
+		}
+
+
 		try
 		{
 			System.out.println("Converting...");
@@ -37,12 +52,12 @@ public class Convert_Images
 					String new_path="./"+dest_path+"/"+new_filename;
 					
 					//if destination image doesn't exist, then convert
-		    	if (new File(new_path).isFile()==false)
-		    		image_converter.convertImage(dir_path+"/"+list_of_files[x].getName(), new_path);
-		    	else
-		    		System.out.println("Skipped ./"+dir_path+"/"+list_of_files[x].getName());
-		    	
-		      System.out.println("Converted ./"+dir_path+"/"+list_of_files[x].getName()+" -> "+new_path);
+					if (new File(new_path).isFile()==false)
+						image_converter.convertImage(dir_path+"/"+list_of_files[x].getName(), new_path);
+					else
+						System.out.println("Skipped ./"+dir_path+"/"+list_of_files[x].getName());
+					
+					System.out.println("Converted ./"+dir_path+"/"+list_of_files[x].getName()+" -> "+new_path);
 				}
 				else
 					System.out.println("Skipped ./"+dir_path+"/"+list_of_files[x].getName());
